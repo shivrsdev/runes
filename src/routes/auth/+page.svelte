@@ -5,7 +5,7 @@
 	let { form, data }: { form: ActionData; data: PageData } = $props();
 
 	onMount(() => {
-		if (data.sessionToken) window.location.replace('/home');
+		if (data.loggedIn) window.location.replace('/home');
 	});
 </script>
 

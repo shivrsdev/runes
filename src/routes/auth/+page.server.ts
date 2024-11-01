@@ -56,8 +56,19 @@ export const actions = {
 	}
 } satisfies Actions;
 
-export const load: PageServerLoad = ({ cookies }) => {
+export const load: PageServerLoad = async ({ cookies }) => {
+	const sessionToken = cookies.get('sessionToken');
+
+	if(!sessionToken)
+		return { loggedIn: false };
+
+	const user = await prisma.user.findUnique({
+		where: {
+			sessionToken: sessionToken
+		}
+	});
+
 	return {
-		sessionToken: cookies.get('sessionToken')
+		loggedIn: user ? true : false
 	};
 };

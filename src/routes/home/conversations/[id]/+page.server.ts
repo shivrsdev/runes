@@ -3,6 +3,8 @@ import { AuthService } from '$lib/server/services/auth';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
+const REPORTS_NEEDED_FOR_DELETION = 5;
+
 export const actions = {
 	sendMessage: async ({ cookies, params, request }) => {
 		const user = await AuthService.getUserFromCookies(cookies);
@@ -102,6 +104,82 @@ export const actions = {
 		});
 
 		throw redirect(302, `/home/conversations/${params.id}`);
+	},
+	deleteMessage: async ({ cookies, params, request }) => {
+		const user = await AuthService.getUserFromCookies(cookies);
+
+		if (!user) return fail(401, { unauthorized: true }); // Unauthorized
+
+		const data = await request.formData();
+		const messageId = parseInt(data.get('messageId') as string);
+		
+		if(!messageId) return fail(422, { missingFields: true }); // Missing fields
+
+		await prisma.message.delete({
+			where: {
+				id: messageId,
+				user: user,
+			}
+		});
+
+		throw redirect(302, `/home/conversations/${params.id}`);
+	},
+	reportMessage: async ({ cookies, params, request }) => {
+		const user = await AuthService.getUserFromCookies(cookies);
+
+		if (!user) return fail(401, { unauthorized: true }); // Unauthorized
+
+		const data = await request.formData();
+		const messageId = parseInt(data.get('messageId') as string);
+		
+		if(!messageId) return fail(422, { missingFields: true }); // Missing fields
+
+		const message = await prisma.message.findUnique({
+			where: {
+				id: messageId
+			}
+		});
+
+		if(!message) return fail(404, { messageNotFound: true }) // Message not found
+
+		const report = await prisma.report.findFirst({
+			where: {
+				message: message,
+				user: user
+			}
+		});
+
+		if(report)
+			return fail(409, { alreadyReported: true }) // Already reported
+
+		const reports = await prisma.report.findMany({
+			where: {
+				message: {
+					id: messageId
+				}
+			}
+		});
+
+		if(reports.length+1 >= REPORTS_NEEDED_FOR_DELETION) {
+			await prisma.message.delete({
+				where: {
+					id: messageId
+				}
+			});
+		} else {
+			await prisma.report.create({
+				data: {
+					user: {
+						connect: user
+					},
+					message: {
+						connect: message
+					}
+				}
+			});
+		}
+
+		throw redirect(302, `/home/conversations/${params.id}`);
 	}
 } satisfies Actions;
 
@@ -134,6 +212,11 @@ export const load: PageServerLoad = async ({ cookies, params }) => {
 				select: {
 					id: true,
 					username: true
+				}
+			},
+			reports: {
+				select: {
+					id: true
 				}
 			}
 		},

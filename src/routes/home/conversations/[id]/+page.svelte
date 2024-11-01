@@ -3,11 +3,7 @@
 	import type { PageData } from './$types';
 	import { invalidateAll } from '$app/navigation';
 
-	let {
-		data
-	}: {
-		data: PageData;
-	} = $props();
+	let { data }: { data: PageData } = $props();
 	let content = $state('');
 	let targetUsername = $state('');
 	let chatContainer: HTMLDivElement;
@@ -40,44 +36,46 @@
 				bind:value={targetUsername}
 				class="border p-2"
 			/>
-			{#if targetUsername}
-				<button type="submit" class="ml-2 border p-2"> Add ➕ </button>
-			{:else}
-				<button type="submit" class="ml-2 border p-2" disabled> Add ➕ </button>
-			{/if}
+			<button type="submit" class="ml-2 border p-2" disabled={!targetUsername}>
+				Add ➕
+			</button>
 		</form>
 	</div>
 
 	<div
 		bind:this={chatContainer}
-		class="chat-container flex-grow overflow-y-auto p-4"
+		class="chat-container flex-grow overflow-y-scroll p-4"
 		style="max-height: calc(100vh - 160px);"
 	>
 		{#if data.messages}
 			{#each data.messages as message}
 				<div class="chat {data.user.id === message.user.id ? 'chat-end' : 'chat-start'}">
-					<div class="chat-header">
-						{message.user.username}
-						<time class="text-xs opacity-50"
-							>{new Date(message.createdAt).toLocaleTimeString()}</time
-						>
-						<div class="dropdown dropdown-top">
-							<div tabindex="0" role="button" class="btn rounded-lg m-1 scale-75">
+					<div class="chat-header flex justify-between items-center space-x-1">
+						<span>{message.user.username}</span>
+						<time class="text-xs opacity-50">
+							{new Date(message.createdAt).toLocaleTimeString()}
+						</time>
+						<div class="dropdown relative">
+							<button
+								tabindex="0"
+								class="btn rounded-lg m-1 scale-75"
+								aria-label="Options"
+							>
 								...
-							</div>
-							<ul class="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow">
+							</button>
+							<ul class="menu dropdown-content absolute right-0 z-[1] rounded-box bg-base-100 p-2 shadow">
 								{#if message.user.id === data.user.id}
-								<form action="?/deleteMessage" method="post">
+								<form action="?/deleteMessage" method="post" class="flex items-center">
 									<input type="number" name="messageId" value={message.id} hidden>
-									<button type="submit">
+									<button type="submit" class="text-red-600 hover:underline">
 										Delete
 									</button>
 								</form>
 								{:else}
-								<form action="?/reportMessage" method="post">
+								<form action="?/reportMessage" method="post" class="flex items-center">
 									<input type="number" name="messageId" value={message.id} hidden>
-									<button type="submit">
-										Report
+									<button type="submit" class="text-blue-600 hover:underline">
+										Report {message.reports.length}
 									</button>
 								</form>
 								{/if}
@@ -90,7 +88,6 @@
 		{/if}
 	</div>
 
-	<!-- Message Form -->
 	<form action="?/sendMessage" method="post" class="flex w-full p-2">
 		<input
 			type="text"
@@ -99,10 +96,8 @@
 			class="flex-grow border p-2"
 			bind:value={content}
 		/>
-		{#if content}
-			<button type="submit" class="w-1/4 border p-2"> Send 📨 </button>
-		{:else}
-			<button type="submit" class="w-1/4 border p-2" disabled> Send 📨 </button>
-		{/if}
+		<button type="submit" class="w-1/4 border p-2" disabled={!content}>
+			Send 📨
+		</button>
 	</form>
 </main>
