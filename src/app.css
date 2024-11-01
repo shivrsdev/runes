@@ -1,0 +1,11 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+button {
+	@apply btn btn-outline rounded-none;
+}
+
+input {
+	@apply input input-bordered rounded-none;
+}
