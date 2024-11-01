@@ -1,6 +1,5 @@
 import { prisma } from '$lib/server/database';
 import { AuthService } from '$lib/server/services/auth';
-import { fail } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ cookies }) => {

@@ -74,13 +74,21 @@ export const actions = {
 
 		if (!targetUsername) return fail(422, { missingFields: true }); // Missing targetUsername field
 
+		if (targetUsername === user.username) return fail(409, { userAlreadyMember: true }); // User is already a member
+
 		const targetUser = await prisma.user.findUnique({
 			where: {
 				username: targetUsername
+			},
+			include: {
+				conversations: true
 			}
 		});
 
 		if (!targetUser) return fail(404, { userNotFound: true }); // User not found
+
+		if (targetUser.conversations.includes(conversation))
+			return fail(409, { userAlreadyMember: true }); // User is already a member
 
 		await prisma.conversation.update({
 			where: conversation,
@@ -139,6 +147,7 @@ export const load: PageServerLoad = async ({ cookies, params }) => {
 
 	return {
 		messages: reversedMessages,
+		conversationName: conversation.name,
 		user: user
 	};
 };
