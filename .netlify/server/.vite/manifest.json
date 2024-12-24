@@ -1,0 +1,169 @@
+{
+  ".svelte-kit/generated/server/internal.js": {
+    "file": "internal.js",
+    "name": "internal",
+    "src": ".svelte-kit/generated/server/internal.js",
+    "isEntry": true,
+    "imports": [
+      "_internal.js"
+    ]
+  },
+  "_auth.js": {
+    "file": "chunks/auth.js",
+    "name": "auth"
+  },
+  "_client.js": {
+    "file": "chunks/client.js",
+    "name": "client",
+    "imports": [
+      "_exports.js",
+      "_index.js"
+    ]
+  },
+  "_escaping.js": {
+    "file": "chunks/escaping.js",
+    "name": "escaping"
+  },
+  "_exports.js": {
+    "file": "chunks/exports.js",
+    "name": "exports"
+  },
+  "_index.js": {
+    "file": "chunks/index.js",
+    "name": "index"
+  },
+  "_index2.js": {
+    "file": "chunks/index2.js",
+    "name": "index"
+  },
+  "_internal.js": {
+    "file": "chunks/internal.js",
+    "name": "internal",
+    "imports": [
+      "_index.js"
+    ]
+  },
+  "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
+    "file": "index.js",
+    "name": "index",
+    "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js",
+    "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_internal.js",
+      "_index2.js",
+      "_exports.js"
+    ]
+  },
+  "src/routes/+error.svelte": {
+    "file": "entries/pages/_error.svelte.js",
+    "name": "entries/pages/_error.svelte",
+    "src": "src/routes/+error.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_client.js",
+      "_escaping.js"
+    ]
+  },
+  "src/routes/+layout.svelte": {
+    "file": "entries/pages/_layout.svelte.js",
+    "name": "entries/pages/_layout.svelte",
+    "src": "src/routes/+layout.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_layout.D-idlkbH.css"
+    ]
+  },
+  "src/routes/+page.svelte": {
+    "file": "entries/pages/_page.svelte.js",
+    "name": "entries/pages/_page.svelte",
+    "src": "src/routes/+page.svelte",
+    "isEntry": true
+  },
+  "src/routes/+page.ts": {
+    "file": "entries/pages/_page.ts.js",
+    "name": "entries/pages/_page.ts",
+    "src": "src/routes/+page.ts",
+    "isEntry": true
+  },
+  "src/routes/auth/+page.server.ts": {
+    "file": "entries/pages/auth/_page.server.ts.js",
+    "name": "entries/pages/auth/_page.server.ts",
+    "src": "src/routes/auth/+page.server.ts",
+    "isEntry": true,
+    "imports": [
+      "_auth.js",
+      "_index2.js"
+    ]
+  },
+  "src/routes/auth/+page.svelte": {
+    "file": "entries/pages/auth/_page.svelte.js",
+    "name": "entries/pages/auth/_page.svelte",
+    "src": "src/routes/auth/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_escaping.js",
+      "_index.js"
+    ]
+  },
+  "src/routes/home/+layout.server.ts": {
+    "file": "entries/pages/home/_layout.server.ts.js",
+    "name": "entries/pages/home/_layout.server.ts",
+    "src": "src/routes/home/+layout.server.ts",
+    "isEntry": true,
+    "imports": [
+      "_auth.js"
+    ]
+  },
+  "src/routes/home/+layout.svelte": {
+    "file": "entries/pages/home/_layout.svelte.js",
+    "name": "entries/pages/home/_layout.svelte",
+    "src": "src/routes/home/+layout.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_escaping.js"
+    ]
+  },
+  "src/routes/home/+page.server.ts": {
+    "file": "entries/pages/home/_page.server.ts.js",
+    "name": "entries/pages/home/_page.server.ts",
+    "src": "src/routes/home/+page.server.ts",
+    "isEntry": true,
+    "imports": [
+      "_auth.js",
+      "_index2.js"
+    ]
+  },
+  "src/routes/home/+page.svelte": {
+    "file": "entries/pages/home/_page.svelte.js",
+    "name": "entries/pages/home/_page.svelte",
+    "src": "src/routes/home/+page.svelte",
+    "isEntry": true
+  },
+  "src/routes/home/conversations/[id]/+page.server.ts": {
+    "file": "entries/pages/home/conversations/_id_/_page.server.ts.js",
+    "name": "entries/pages/home/conversations/_id_/_page.server.ts",
+    "src": "src/routes/home/conversations/[id]/+page.server.ts",
+    "isEntry": true,
+    "imports": [
+      "_auth.js",
+      "_index2.js"
+    ]
+  },
+  "src/routes/home/conversations/[id]/+page.svelte": {
+    "file": "entries/pages/home/conversations/_id_/_page.svelte.js",
+    "name": "entries/pages/home/conversations/_id_/_page.svelte",
+    "src": "src/routes/home/conversations/[id]/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_client.js",
+      "_escaping.js"
+    ]
+  }
+}
