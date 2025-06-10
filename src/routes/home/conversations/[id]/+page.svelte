@@ -21,7 +21,7 @@
 		// Reload messages every 5 seconds
 		setInterval(() => {
 			invalidateAll();
-		}, 5000);
+		}, 2500);
 	});
 </script>
 
